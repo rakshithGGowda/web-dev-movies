@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/rakshithGGowda/web-dev-movies/issues"
   },
-  "homepage": "https://github.com/rakshithGGowda/web-dev-movies#readme"
+  "homepage": "https://github.com/rakshithGGowda/web-dev-movies#readme",
+  "dependencies": {
+    "nodemon": "^2.0.6"
+  }
 }

@@ -1,0 +1,61 @@
+.overlay {
+    overflow: auto;
+    color: $textColor;
+    position: fixed;
+    display: none;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    animation: fadein 0.3s ease-in;
+    .movie-info {
+        padding: 10px 15px;
+        span {
+            position: relative;
+            bottom: 8px;
+            margin-right: 20px;
+        }
+    }
+}
+
+.movie-overlay {
+    background-color: $elementBackcolor;
+    position: relative;
+    top: 13vh;
+    margin: auto;
+    width: 840px;
+    border: 1px solid $elementBackcolor;
+    transition: 0.2s ease-in;
+    .overlay-cover {
+        height: 440px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        text-align: center;
+        .overlay-close-btn {
+            position: absolute;
+            right: 6px;
+            top: 2px;
+            cursor: pointer;
+            font-size: large;
+            transition: 0.2s ease-in;
+            &:hover {
+                color: lightgray;
+                opacity: 0.7;
+            }
+        }
+        .movie-tagline {
+            color: #fdfdfd;
+            font-size: 1.7rem;
+            font-weight: 700;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: auto;
+            width: 50%;
+            text-align: center;
+        }
+    }
+}

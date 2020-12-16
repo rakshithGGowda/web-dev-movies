@@ -1,7 +1,8 @@
 const popularApiUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US&page=1 ';
 const fetchMovieUrl = 'https://api.themoviedb.org/3/configuration?api_key=7826b828b8971b2adc0e3801578e24c7';
 const upcomingApiUrl = 'https://api.themoviedb.org/3/movie/upcoming?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US&page=1'
-const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/703771?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US'
+const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'
+const API_KEY = '?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US';
 
 
 const main = document.querySelector('.main');
@@ -36,12 +37,12 @@ trayBtn.addEventListener('click', event => {
 function getImage(imagename, imagesizetype) {
     return fetch(fetchMovieUrl)
         .then(
-            function (response) {
+            function(response) {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
+                    alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                 }
-                return response.json().then(function (data) {
+                return response.json().then(function(data) {
                     baseUrl = data.images.base_url
                     imagesize = data.images[imagesizetype][2];
                     finalurl = baseUrl + imagesize + imagename;
@@ -49,8 +50,8 @@ function getImage(imagename, imagesizetype) {
                 });
             }
         )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
+        .catch(function(err) {
+            alert('Fetch Error :-S', err);
         });
 }
 
@@ -59,32 +60,25 @@ function getImage(imagename, imagesizetype) {
 function onTrayLoad(url) {
     fetch(url)
         .then(
-            function (response) {
+            function(response) {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
+                    alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                     return;
                 }
 
                 // Examine the text in the response
-                response.json().then(function (data) {
-
-
+                response.json().then(function(data) {
 
                     data.results.forEach(element => {
                         imageName = element.poster_path;
-                        // console.log(imageName)
-
 
                         getImage(imageName, "poster_sizes").then(imageUrl => {
-                            // console.log(element.id);
-                            // console.log(imageUrl);
 
                             const imageItem = document.createElement('div');
                             imageItem.classList.add("image-item");
                             imageItem.setAttribute("movie-id", element.id);
                             imageItem.style.backgroundImage = "url(" + imageUrl + ")";
-                            // imageItem.textContent = element.original_title + "    " + element.vote_average
 
                             const rating = document.createElement('div');
                             rating.classList.add('rating');
@@ -94,35 +88,31 @@ function onTrayLoad(url) {
                             main.appendChild(imageItem);
                         });
 
-
-
                     });
 
                 });
             })
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
+        .catch(function(err) {
+            alert('Fetch Error :-S', err);
         });
 }
 
 main.addEventListener('click', event => {
     let movieId = event.target.getAttribute("movie-id")
-    // console.log(movieId);
-    let a = "";
-    let movieDetails = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US';
+    if (movieId == null) return;
+    let genresValue = "";
+    let movieDetails = movieDetailsUrl + movieId + API_KEY;
 
     fetch(movieDetails)
         .then(
-            function (response) {
+            function(response) {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
+                    alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                     return;
                 }
 
-                // Examine the text in the response
-                response.json().then(function (data) {
-                    console.log(data);
+                response.json().then(function(data) {
                     imageName = data.backdrop_path;
                     tagLine = data.tagline;
                     title = data.original_title;
@@ -140,14 +130,11 @@ main.addEventListener('click', event => {
                         document.querySelector('.movie-info-runtime').innerHTML += " " + Math.floor(parseInt(runTime) / 60) + "h" + " " + parseInt(runTime) % 60 + "m";
                         document.querySelector('.movie-info-overview').textContent = overview;
                         genres.forEach(element => {
-                            a += element.name + ","
+                            genresValue += element.name + ","
                         })
-                        a = a.replace(/.$/, ".");
-                        document.querySelector('.genres-info').innerHTML += a;
-                        // console.log(imageUrl)
+                        genresValue = genresValue.replace(/.$/, ".");
+                        document.querySelector('.genres-info').innerHTML += genresValue;
                     })
-
-                    // console.log(imageUrl + tagLine + title + rating + overview + runTime)
 
                     overlay.style.display = 'block';
 
@@ -155,8 +142,8 @@ main.addEventListener('click', event => {
                 });
 
             })
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
+        .catch(function(err) {
+            alert('Fetch Error :-S', err);
         });
 });
 
@@ -170,6 +157,6 @@ closeOverlayBtn.addEventListener('click', event => {
     document.querySelector('.genres-info').textContent = "";
 })
 
-window.onload = function () {
+window.onload = function() {
     onTrayLoad(popularApiUrl);
 }
