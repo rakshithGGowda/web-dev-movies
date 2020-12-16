@@ -7,6 +7,7 @@ const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/703771?api_key=7826b
 const main = document.querySelector('.main');
 const trayBtn = document.querySelector('.navbar-nav');
 const overlay = document.querySelector('.overlay');
+const closeOverlayBtn = document.querySelector('.overlay-close-btn')
 activeTray = 'popular-btn';
 
 trayBtn.addEventListener('click', event => {
@@ -35,12 +36,12 @@ trayBtn.addEventListener('click', event => {
 function getImage(imagename, imagesizetype) {
     return fetch(fetchMovieUrl)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
                         response.status);
                 }
-                return response.json().then(function(data) {
+                return response.json().then(function (data) {
                     baseUrl = data.images.base_url
                     imagesize = data.images[imagesizetype][2];
                     finalurl = baseUrl + imagesize + imagename;
@@ -48,7 +49,7 @@ function getImage(imagename, imagesizetype) {
                 });
             }
         )
-        .catch(function(err) {
+        .catch(function (err) {
             console.log('Fetch Error :-S', err);
         });
 }
@@ -58,7 +59,7 @@ function getImage(imagename, imagesizetype) {
 function onTrayLoad(url) {
     fetch(url)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
                         response.status);
@@ -66,7 +67,7 @@ function onTrayLoad(url) {
                 }
 
                 // Examine the text in the response
-                response.json().then(function(data) {
+                response.json().then(function (data) {
 
 
 
@@ -99,20 +100,20 @@ function onTrayLoad(url) {
 
                 });
             })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log('Fetch Error :-S', err);
         });
 }
 
 main.addEventListener('click', event => {
     let movieId = event.target.getAttribute("movie-id")
-        // console.log(movieId);
-
+    // console.log(movieId);
+    let a = "";
     let movieDetails = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US';
 
     fetch(movieDetails)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
                         response.status);
@@ -120,7 +121,7 @@ main.addEventListener('click', event => {
                 }
 
                 // Examine the text in the response
-                response.json().then(function(data) {
+                response.json().then(function (data) {
                     console.log(data);
                     imageName = data.backdrop_path;
                     tagLine = data.tagline;
@@ -128,15 +129,21 @@ main.addEventListener('click', event => {
                     rating = data.vote_average;
                     overview = data.overview;
                     runTime = data.runtime;
-
+                    genres = data.genres;
                     getImage(imageName, "profile_sizes").then(imageUrl => {
-                        overlay.children[0].children[0].style.backgroundImage = "url(" + imageUrl + ")";
+                        document.querySelector('.overlay-cover').style.backgroundImage = "url(" + imageUrl + ")";
                         if (tagLine !== "") {
-                            overlay.children[0].children[0].children[0].textContent = '"' + tagLine + '"';
+                            document.querySelector('.movie-tagline').textContent = '"' + tagLine + '"';
                         }
                         document.querySelector('.overlay-movie-title').textContent = title;
                         document.querySelector('.movie-info-rating').innerHTML += " " + rating;
                         document.querySelector('.movie-info-runtime').innerHTML += " " + Math.floor(parseInt(runTime) / 60) + "h" + " " + parseInt(runTime) % 60 + "m";
+                        document.querySelector('.movie-info-overview').textContent = overview;
+                        genres.forEach(element => {
+                            a += element.name + ","
+                        })
+                        a = a.replace(/.$/, ".");
+                        document.querySelector('.genres-info').innerHTML += a;
                         // console.log(imageUrl)
                     })
 
@@ -148,12 +155,21 @@ main.addEventListener('click', event => {
                 });
 
             })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log('Fetch Error :-S', err);
         });
 });
 
+closeOverlayBtn.addEventListener('click', event => {
+    overlay.style.display = 'none';
+    document.querySelector('.movie-tagline').textContent = "";
+    document.querySelector('.overlay-movie-title').textContent = ""
+    document.querySelector('.movie-info-rating').innerHTML = '<i class="fas fa-star"> </i>'
+    document.querySelector('.movie-info-runtime').innerHTML = '<i class="fas fa-clock"></i>'
+    document.querySelector('.movie-info-overview').textContent = ""
+    document.querySelector('.genres-info').textContent = "";
+})
 
-window.onload = function() {
+window.onload = function () {
     onTrayLoad(popularApiUrl);
 }

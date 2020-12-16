@@ -24,11 +24,11 @@
   cursor: pointer;
   -webkit-transition: 0.2s ease-in;
   transition: 0.2s ease-in;
-  -webkit-animation: fadein 0.7s ease-in;
-          animation: fadein 0.7s ease-in;
+  -webkit-animation: fadeinup 0.7s ease-in;
+          animation: fadeinup 0.7s ease-in;
 }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes fadeinup {
   from {
     opacity: 0;
     -webkit-transform: translateY(50px);
@@ -38,19 +38,37 @@
     opacity: 1;
     -webkit-transform: translateY(0px);
             transform: translateY(0px);
+  }
+}
+
+@keyframes fadeinup {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 @keyframes fadein {
   from {
     opacity: 0;
-    -webkit-transform: translateY(50px);
-            transform: translateY(50px);
   }
   to {
     opacity: 1;
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
   }
 }
 
@@ -101,6 +119,8 @@ nav {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  -webkit-animation: fadein 0.3s ease-in;
+          animation: fadein 0.3s ease-in;
 }
 
 .movie-overlay {
@@ -115,7 +135,6 @@ nav {
 }
 
 .overlay-cover {
-  width: 840px;
   height: 440px;
   background-position: bottom;
   background-size: cover;
@@ -124,7 +143,24 @@ nav {
   position: relative;
 }
 
+.overlay-close-btn {
+  display: inline;
+  position: absolute;
+  right: 6px;
+  top: 7px;
+  cursor: pointer;
+  font-size: large;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.overlay-close-btn:hover {
+  font-size: larger;
+  color: gray;
+}
+
 .movie-tagline {
+  color: #fdfdfd;
   font-family: 'poppins', sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
@@ -138,7 +174,7 @@ nav {
 }
 
 .movie-info {
-  padding: 10px;
+  padding: 10px 15px;
 }
 
 .movie-info h1 {
@@ -150,4 +186,50 @@ nav {
   bottom: 8px;
   margin-right: 20px;
 }
-/*# sourceMappingURL=style.css.map */
+
+.movie-info span, .movie-info p {
+  font-size: 1rem;
+}
+
+.movie-info h3 {
+  font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 900px) {
+  .movie-overlay {
+    top: 0;
+    min-height: 100%;
+    max-width: 100%;
+  }
+  .movie-tagline {
+    font-size: 1.2rem;
+  }
+  .form-control {
+    position: relative;
+  }
+  .btn {
+    position: absolute;
+    right: 20px;
+  }
+}
+
+.form-inline {
+  border: 2px solid black;
+}
+
+.form-control {
+  height: 30px;
+  background-color: #0b1d3e;
+  position: relative;
+}
+
+.btn {
+  position: absolute;
+  right: 5px;
+  height: 28px;
+  margin: auto;
+}
+
+.btn i {
+  height: 20px;
+}
