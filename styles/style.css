@@ -70,6 +70,36 @@
   text-align: center;
 }
 
+::-webkit-input-placeholder {
+  /* Firefox, Chrome, Opera */
+  color: blue;
+}
+
+:-ms-input-placeholder {
+  /* Firefox, Chrome, Opera */
+  color: blue;
+}
+
+::-ms-input-placeholder {
+  /* Firefox, Chrome, Opera */
+  color: blue;
+}
+
+::placeholder {
+  /* Firefox, Chrome, Opera */
+  color: blue;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: red;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: orange;
+}
+
 .form-inline {
   border: 2px solid black;
 }
