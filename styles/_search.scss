@@ -1,27 +1,10 @@
-.search-section {
-    text-align: left;
+
+
+.form-inline{
     border: 2px solid black;
+    
+}
+.form-control{
+    background-color: #0b1d3e;
     position: relative;
-    width: 45vh;
-    .search-form {
-        position: relative;
-        border: none;
-        background-color: transparent;
-        line-height: 22px;
-        padding: 4px;
-        &:focus+.search-name {
-            display: none;
-        }
-    }
-    .search-btn {
-        position: relative;
-        margin-left: 16vh;
-    }
-    .search-name {
-        position: absolute;
-        right: 35vh;
-        top: 5px;
-        font-size: 0.9rem;
-        color: $textColor
-    }
 }

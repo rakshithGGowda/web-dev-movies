@@ -46,20 +46,24 @@ span {
 }
 
 @media only screen and (max-width: 1000px) {
-    .movie-overlay {
-        top: 0;
-        min-height: 100%;
-        max-width: 100%;
-    }
-    .movie-tagline {
-        font-size: 1.2rem;
-    }
-    .search-section {
-        margin: auto;
-        text-align: center;
-        position: relative;
-        margin-top: 10px;
-    }
+    
+   .movie-overlay{
+    top: 0;
+    min-height: 120vh;
+    max-width: 100%;
+}
+.movie-tagline{
+    font-size: 1.2rem;
+}
+.form-control{
+    position: relative;
+    width: 100%;
+}
+
+.btn{
+    position: absolute;
+    right: 20px;
+}
 }
 
 //animation keyframe
