@@ -60,6 +60,12 @@ span {
     width: 100%;
 }
 
+.overlay-cover{
+    width: 100%;
+    background-size: contain;
+    background-position: center center;
+}
+
 .btn{
     position: absolute;
     right: 20px;

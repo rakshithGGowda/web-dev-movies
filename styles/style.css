@@ -72,32 +72,32 @@
 
 ::-webkit-input-placeholder {
   /* Firefox, Chrome, Opera */
-  color: blue;
+  color: white;
 }
 
 :-ms-input-placeholder {
   /* Firefox, Chrome, Opera */
-  color: blue;
+  color: white;
 }
 
 ::-ms-input-placeholder {
   /* Firefox, Chrome, Opera */
-  color: blue;
+  color: white;
 }
 
 ::placeholder {
   /* Firefox, Chrome, Opera */
-  color: blue;
+  color: white;
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  color: red;
+  color: white;
 }
 
 ::-ms-input-placeholder {
   /* Microsoft Edge */
-  color: orange;
+  color: white;
 }
 
 .form-inline {
@@ -193,6 +193,11 @@ span {
   .form-control {
     position: relative;
     width: 100%;
+  }
+  .overlay-cover {
+    width: 100%;
+    background-size: contain;
+    background-position: center center;
   }
   .btn {
     position: absolute;

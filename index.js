@@ -4,13 +4,14 @@ const upcomingApiUrl = 'https://api.themoviedb.org/3/movie/upcoming?api_key=7826
 const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'
 const API_KEY = '?api_key=7826b828b8971b2adc0e3801578e24c7&language=en-US';
 
-
+//DOM
 const main = document.querySelector('.main');
 const trayBtn = document.querySelector('.navbar-nav');
 const overlay = document.querySelector('.overlay');
 const closeOverlayBtn = document.querySelector('.overlay-close-btn')
 activeTray = 'popular-btn';
 
+//Onclick on popular and upcoming tray
 trayBtn.addEventListener('click', event => {
     event.preventDefault();
 
@@ -33,16 +34,16 @@ trayBtn.addEventListener('click', event => {
     }
 })
 
-
+//returns the image Url from the image name
 function getImage(imagename, imagesizetype) {
     return fetch(fetchMovieUrl)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                 }
-                return response.json().then(function(data) {
+                return response.json().then(function (data) {
                     baseUrl = data.images.base_url
                     imagesize = data.images[imagesizetype][2];
                     finalurl = baseUrl + imagesize + imagename;
@@ -50,25 +51,24 @@ function getImage(imagename, imagesizetype) {
                 });
             }
         )
-        .catch(function(err) {
+        .catch(function (err) {
             alert('Fetch Error :-S', err);
         });
 }
 
 
-
+//Main Posters Items fetch
 function onTrayLoad(url) {
     fetch(url)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                     return;
                 }
 
-                // Examine the text in the response
-                response.json().then(function(data) {
+                response.json().then(function (data) {
 
                     data.results.forEach(element => {
                         imageName = element.poster_path;
@@ -92,11 +92,12 @@ function onTrayLoad(url) {
 
                 });
             })
-        .catch(function(err) {
+        .catch(function (err) {
             alert('Fetch Error :-S', err);
         });
 }
 
+//Onclick on Poster Items to open overlay
 main.addEventListener('click', event => {
     let movieId = event.target.getAttribute("movie-id")
     if (movieId == null) return;
@@ -105,14 +106,14 @@ main.addEventListener('click', event => {
 
     fetch(movieDetails)
         .then(
-            function(response) {
+            function (response) {
                 if (response.status !== 200) {
                     alert('Looks like there was a problem. Status Code: ' +
                         response.status);
                     return;
                 }
 
-                response.json().then(function(data) {
+                response.json().then(function (data) {
                     imageName = data.backdrop_path;
                     tagLine = data.tagline;
                     title = data.original_title;
@@ -142,11 +143,12 @@ main.addEventListener('click', event => {
                 });
 
             })
-        .catch(function(err) {
+        .catch(function (err) {
             alert('Fetch Error :-S', err);
         });
 });
 
+//overlay close btn
 closeOverlayBtn.addEventListener('click', event => {
     overlay.style.display = 'none';
     document.querySelector('.movie-tagline').textContent = "";
@@ -157,6 +159,7 @@ closeOverlayBtn.addEventListener('click', event => {
     document.querySelector('.genres-info').textContent = "";
 })
 
-window.onload = function() {
+//Onlad main page
+window.onload = function () {
     onTrayLoad(popularApiUrl);
 }
